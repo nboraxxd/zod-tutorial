@@ -5,7 +5,10 @@ import { z } from "zod";
 //       ^ 🕵️‍♂️
 
 export const toString = (num: unknown) => {
-  return String(num);
+  const numberSchema = z.number()
+
+  const parsed = numberSchema.parse(num)
+  return String(parsed)
 };
 
 // TESTS
