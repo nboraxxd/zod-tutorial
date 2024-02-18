@@ -5,8 +5,8 @@ import { z } from "zod";
 
 const Form = z.object({
   repoName: z.string(),
-  privacyLevel: z.string(),
-  //              ^ 🕵️‍♂️
+  // privacyLevel: z.union([z.literal("private"), z.literal("public")]),
+  privacyLevel: z.enum(["private", "public"]),
 });
 
 export const validateFormInput = (values: unknown) => {
