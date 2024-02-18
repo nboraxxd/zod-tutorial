@@ -10,6 +10,13 @@ const StarWarsPerson = z.object({
 
 const StarWarsPeopleResults = z.object({
   results: z.array(StarWarsPerson),
+}).transform((data) => {
+  return {
+    results: data.results.map((person: any) => ({
+      ...person,
+      nameAsArray: person.name.split(" "),
+    })),
+  };
 });
 
 export const fetchStarWarsPeople = async () => {
