@@ -6,21 +6,28 @@ import { Equal, Expect } from "./helpers/type-utils";
  * while also making sure the cases don't go red!
  */
 
-const User = z.object({
+const Id = z.string().uuid();
+
+const ObjectWithId = z.object({
   id: z.string().uuid(),
+});
+
+const User = z.object({
+  id: Id,
   name: z.string(),
 });
 
-const Post = z.object({
-  id: z.string().uuid(),
+const Post = ObjectWithId.extend({
   title: z.string(),
   body: z.string(),
 });
 
-const Comment = z.object({
-  id: z.string().uuid(),
-  text: z.string(),
-});
+const Comment = ObjectWithId.merge(
+  z.object({
+    id: Id,
+    text: z.string(),
+  })
+);
 
 type cases = [
   Expect<Equal<z.infer<typeof Comment>, { id: string; text: string }>>,
